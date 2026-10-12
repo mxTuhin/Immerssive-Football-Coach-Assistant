@@ -1,0 +1,17 @@
+# GPU worker: pretrained detection, calibration, team, ReID, OCR
+# Install torch first matching your CUDA version: https://pytorch.org/get-started/locally/
+-r base.txt
+opencv-python-headless>=4.9
+torch>=2.2
+torchvision>=0.17
+ultralytics>=8.2          # loads roboflow/sports football YOLO weights (.pt)
+supervision>=0.22         # boxes, annotators, tiling helpers
+sahi>=0.11                # sliced inference for 4K panoramic video
+transformers>=4.41        # SigLIP team embeddings
+sentencepiece>=0.2
+umap-learn>=0.5
+scikit-learn>=1.4
+timm>=0.9                 # PARSeq backbone (loaded via torch.hub baudm/parseq)
+gdown>=5.1                # Google Drive downloads for roboflow sample assets
+# OSNet ReID (torchreid). Install from source:
+#   pip install git+https://github.com/KaiyangZhou/deep-person-reid.git

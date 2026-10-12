@@ -1,0 +1,35 @@
+# AI analyst test set (build plan section 8): 30 questions per match.
+# Scoring per answer: correct (vs tool truth), useful, actionable (coach rubric 1-5) + automatic checks:
+#   * at least one tool call, * grounding.ok (no number without a tool result).
+# {home}/{away}/{player} are filled from the match being evaluated.
+questions:
+  - What was the final score and who had more possession?
+  - How did {home} build up from the back, and how often did they reach the final third?
+  - Which player covered the most distance, and how many sprints did they make?
+  - Who was the fastest player on the pitch?
+  - How compact was {away} out of possession compared with in possession?
+  - How high was {home}'s defensive line on average?
+  - Did {home} press higher in the first or the second half?
+  - What was each team's PPDA and what does it say about their pressing?
+  - List all shots by {home} with the time and the shooter.
+  - Which moments led to goals?
+  - Where did {away} win the ball back most often?
+  - How many recoveries did {home} make in the final third?
+  - Which passes added the most threat (xT)?
+  - What happened around the first goal? Who was near the ball?
+  - How did possession change over the match in 15-minute blocks?
+  - Which team spent more time in a low block?
+  - How did {player} contribute in possession?
+  - How many passes did {player} complete and what was the completion rate?
+  - Compare the two halves for {away}.
+  - Show me the high turnovers that led to shots.
+  - Which set pieces created chances?
+  - What was {home}'s width in possession?
+  - Which player had the most high-intensity running (HSR + sprint distance)?
+  - What were the three most dangerous attacks by {away}?
+  - How long were {home}'s transition phases on average after winning the ball?
+  - Were there periods where {home} lost control of the game?
+  - Who were the most involved players in {home}'s passing?
+  - What should we work on in training this week based on this match?
+  - What data quality issues should I be aware of in this match?
+  - Give me a three-sentence summary for the players' group chat.

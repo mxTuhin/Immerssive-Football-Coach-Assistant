@@ -1,0 +1,10 @@
+# NEEDS DOWNLOAD - not in git. Fetch with: python scripts/fetch_data.py --videos
+# Could not be fetched in the build environment (Google Drive is blocked there); small enough to fetch locally.
+name: V1 smoke-test clip
+target: v1_121364_0.mp4
+method: gdown
+url: https://drive.google.com/uc?id=1vVwjW1dE1drIdd4ZSILfbCGPD4weoNiu
+source: https://github.com/roboflow/sports (examples/soccer/setup.sh)
+purpose: ~30 s Bundesliga broadcast clip; smoke test of the full pipeline (build plan V1)
+group: videos
+required: true

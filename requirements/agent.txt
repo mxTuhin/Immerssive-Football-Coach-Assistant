@@ -1,0 +1,3 @@
+# AI analyst (Claude + tools over match data)
+-r base.txt
+anthropic>=0.70

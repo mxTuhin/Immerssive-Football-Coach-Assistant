@@ -1,0 +1,8 @@
+# NEEDS DOWNLOAD - pretrained roboflow/sports YOLOv8 ball detector.
+name: ball detector
+target: football-ball-detection.pt
+method: gdown
+url: https://drive.google.com/uc?id=1isw4wx-MK9h9LMr36VvIWlJD6ppUvw7V
+source: https://github.com/roboflow/sports
+group: models
+required: true

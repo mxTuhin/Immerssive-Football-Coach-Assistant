@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Runtime storage (pipeline artifacts, uploads, packages)
+storage/
+var/
+*.sqlite3
+*.db
+
+# Large downloaded assets: tracked only through their *.download flag files.
+# Run `python scripts/fetch_data.py` to fetch them locally.
+data/videos/*
+!data/videos/*.download
+!data/videos/README.md
+data/soccertrack/*
+!data/soccertrack/*.download
+!data/soccertrack/README.md
+models/*
+!models/*.download
+!models/README.md
+
+# Uncompressed open-data caches (we commit the .gz versions)
+data/opendata/**/*.jsonl
+data/opendata/**/*_Raw*TrackingData*.csv
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Node (web app, later)
+node_modules/
+
+# Unity (Quest app, later)
+apps/quest/Library/
+apps/quest/Temp/
+apps/quest/Obj/
+apps/quest/Build/
+apps/quest/Logs/
+apps/quest/UserSettings/

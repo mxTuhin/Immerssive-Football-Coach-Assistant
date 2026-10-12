@@ -1,0 +1,7 @@
+# AUTO - downloaded by torch.hub on first use (baudm/parseq, pretrained=True). Nothing to do.
+name: PARSeq jersey OCR
+target: (torch hub cache)
+method: auto
+url: https://github.com/baudm/parseq
+group: models
+required: false

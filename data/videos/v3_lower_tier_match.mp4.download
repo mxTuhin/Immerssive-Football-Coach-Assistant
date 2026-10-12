@@ -1,0 +1,10 @@
+# NEEDS DOWNLOAD - manual choice. A public full-match upload by a lower-tier club (follow-cam / low angle).
+# Pick a video whose licence allows analysis (or ask the club), save it as data/videos/v3_lower_tier_match.mp4
+# and note the URL + licence in data/videos/README.md. Example tool (respect the site's terms): yt-dlp -f mp4 <url>
+name: V3 lower-tier full match
+target: v3_lower_tier_match.mp4
+method: manual
+url:
+purpose: shows behaviour on footage customers actually have (build plan V3); moving-camera calibration test
+group: videos
+required: true

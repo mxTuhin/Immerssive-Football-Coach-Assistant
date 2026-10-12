@@ -1,0 +1,98 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fmi"
+version = "0.1.0"
+description = "Football Match Intelligence: video -> tracking -> analytics -> AI analyst -> 3D/XR"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=15",
+  "pydantic>=2.6",
+  "scipy>=1.12",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+api = [
+  "fastapi>=0.111",
+  "uvicorn[standard]>=0.29",
+  "python-multipart>=0.0.9",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.1",
+  "pydantic-settings>=2.2",
+  "celery[redis]>=5.4",
+  "redis>=5.0",
+  "boto3>=1.34",
+  "httpx>=0.27",
+]
+vision = [
+  "opencv-python-headless>=4.9",
+  "torch>=2.2",
+  "torchvision>=0.17",
+  "ultralytics>=8.2",
+  "supervision>=0.22",
+  "sahi>=0.11",
+  "transformers>=4.41",
+  "sentencepiece>=0.2",
+  "umap-learn>=0.5",
+  "scikit-learn>=1.4",
+  "timm>=0.9",
+  "gdown>=5.1",
+]
+agent = ["anthropic>=0.70"]
+eval = ["kloppy>=3.14", "socceraction>=1.5", "trackeval @ git+https://github.com/JonathonLuiten/TrackEval.git"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.4", "mypy>=1.10", "httpx>=0.27"]
+
+[project.scripts]
+fmi = "fmi_pipeline.cli:main"
+
+[tool.setuptools]
+packages = [
+  "fmi_schema", "fmi_schema.adapters",
+  "fmi_analytics",
+  "fmi_agent",
+  "fmi_pipeline", "fmi_pipeline.models", "fmi_pipeline.tracking", "fmi_pipeline.stages",
+  "fmi_api",
+  "fmi_eval",
+]
+
+[tool.setuptools.package-dir]
+fmi_schema = "packages/schema/fmi_schema"
+fmi_analytics = "packages/analytics/fmi_analytics"
+fmi_agent = "packages/agent/fmi_agent"
+fmi_pipeline = "workers/pipeline/fmi_pipeline"
+fmi_api = "apps/api/fmi_api"
+fmi_eval = "eval/fmi_eval"
+
+[tool.setuptools.package-data]
+fmi_analytics = ["data/*.json"]
+fmi_agent = ["eval/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [
+  "packages/schema",
+  "packages/analytics",
+  "packages/agent",
+  "workers/pipeline",
+  "apps/api",
+  "eval",
+]
+markers = [
+  "gpu: needs a GPU and real model weights (skipped in CI)",
+  "data: needs downloaded data (skipped when missing)",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]

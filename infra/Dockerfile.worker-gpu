@@ -1,0 +1,18 @@
+# GPU worker: video pipeline (detection, calibration, tracking, team, identity, ball).
+# Runs on a cloud L4/A10 (or locally with an NVIDIA GPU + nvidia-container-toolkit).
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg git libgl1 libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements/ requirements/
+RUN pip install --no-cache-dir -r requirements/vision.txt -r requirements/api.txt -r requirements/agent.txt \
+    && pip install --no-cache-dir git+https://github.com/KaiyangZhou/deep-person-reid.git
+COPY pyproject.toml README.md ./
+COPY packages/ packages/
+COPY workers/ workers/
+COPY apps/api/ apps/api/
+COPY eval/ eval/
+COPY scripts/ scripts/
+RUN pip install --no-cache-dir --no-deps -e .
+# model weights are mounted at /app/models (python scripts/fetch_data.py --models on the host)
+CMD ["celery", "-A", "fmi_api.tasks", "worker", "-Q", "gpu", "-c", "1", "--loglevel=info"]

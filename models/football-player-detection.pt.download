@@ -1,0 +1,8 @@
+# NEEDS DOWNLOAD - pretrained roboflow/sports YOLOv8 player/goalkeeper/referee/ball detector.
+name: player detector
+target: football-player-detection.pt
+method: gdown
+url: https://drive.google.com/uc?id=17PXFNlx-jI7VjVo_vQnB1sONjRyvoB-q
+source: https://github.com/roboflow/sports
+group: models
+required: true

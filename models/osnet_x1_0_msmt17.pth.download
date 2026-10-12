@@ -1,0 +1,9 @@
+# NEEDS DOWNLOAD - manual. OSNet x1.0 ReID weights trained on MSMT17 from the torchreid model zoo.
+# Download the "osnet_x1_0" MSMT17 checkpoint from the model zoo page and save it as models/osnet_x1_0_msmt17.pth.
+# Without it torchreid falls back to ImageNet weights (works, weaker linking).
+name: OSNet ReID
+target: osnet_x1_0_msmt17.pth
+method: manual
+url: https://kaiyangzhou.github.io/deep-person-reid/MODEL_ZOO
+group: models
+required: false

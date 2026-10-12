@@ -1,0 +1,7 @@
+# Tests + lint (CI runs these without a GPU; models are faked)
+-r api.txt
+-r agent.txt
+pytest>=8.0
+pytest-cov>=5.0
+ruff>=0.4
+mypy>=1.10

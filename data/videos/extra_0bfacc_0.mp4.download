@@ -1,0 +1,9 @@
+# NEEDS DOWNLOAD - optional extra roboflow/sports sample clip. Fetch with: python scripts/fetch_data.py --only extra_0bfacc_0.mp4
+name: roboflow sample clip 0bfacc_0
+target: extra_0bfacc_0.mp4
+method: gdown
+url: https://drive.google.com/uc?id=12TqauVZ9tLAv8kWxTTBFWtgt2hNQ4_ZF
+source: https://github.com/roboflow/sports (examples/soccer/setup.sh)
+purpose: extra broadcast clips for detection/tracking sanity checks
+group: videos
+required: false

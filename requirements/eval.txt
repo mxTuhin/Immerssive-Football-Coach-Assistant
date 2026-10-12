@@ -1,0 +1,6 @@
+# Evaluation extras
+-r base.txt
+kloppy>=3.14              # read Metrica EPTS (Sample Game 3) and other provider formats
+socceraction>=1.5         # SPADL / xT reference implementation
+huggingface_hub>=0.23     # SoccerTrack v2 download (gated dataset)
+git+https://github.com/JonathonLuiten/TrackEval.git   # HOTA

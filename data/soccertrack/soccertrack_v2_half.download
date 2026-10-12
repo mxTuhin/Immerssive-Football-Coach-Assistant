@@ -1,0 +1,15 @@
+# NEEDS DOWNLOAD - gated dataset (> 100 MB). Steps:
+#   1. open https://huggingface.co/datasets/atomscott/soccertrack-v2 and accept the access conditions
+#   2. huggingface-cli login   (or set HF_TOKEN)
+#   3. python scripts/fetch_data.py --soccertrack --list-remote     # see the files of the release
+#   4. python scripts/fetch_data.py --soccertrack --pattern "<one half-match video + its labels>"
+# Download ONE half-match only (video + labels), not the full ~145 GB set.
+name: SoccerTrack v2 (one half-match, labelled)
+target: .
+method: huggingface
+repo: atomscott/soccertrack-v2
+repo_type: dataset
+pattern:
+purpose: the only video with ground truth (position error, ID switches, identity %, event F1) - build plan V2
+group: soccertrack
+required: true

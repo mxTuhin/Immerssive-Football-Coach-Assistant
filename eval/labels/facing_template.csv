@@ -1,0 +1,3 @@
+match_id,period,t,player_id,true_deg,true_dir8,labeller,notes
+# true_deg: facing on the pitch in degrees (0 = +x toward the right goal in the pitch frame, counter-clockwise)
+# true_dir8: optional 8-way label (E, NE, N, NW, W, SW, S, SE) when labelled coarsely; converted to degrees

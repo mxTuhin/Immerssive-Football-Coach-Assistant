@@ -1,0 +1,15 @@
+# API + CPU worker (open data, analytics, AI reports). No GPU libraries.
+FROM python:3.11-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements/ requirements/
+RUN pip install --no-cache-dir -r requirements/api.txt -r requirements/agent.txt
+COPY pyproject.toml README.md ./
+COPY packages/ packages/
+COPY workers/ workers/
+COPY apps/api/ apps/api/
+COPY eval/ eval/
+COPY data/opendata/ data/opendata/
+RUN pip install --no-cache-dir --no-deps -e .
+EXPOSE 8000
+CMD ["uvicorn", "fmi_api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,0 +1,7 @@
+# AUTO - downloaded by transformers on first use (google/siglip-base-patch16-224). Nothing to do.
+name: SigLIP team embeddings
+target: (huggingface cache)
+method: auto
+url: https://huggingface.co/google/siglip-base-patch16-224
+group: models
+required: false

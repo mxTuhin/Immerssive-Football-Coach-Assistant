@@ -1,0 +1,85 @@
+# Control plane + workers for local dev and the VPS (build plan section 9).
+#   docker compose -f infra/docker-compose.yml --env-file infra/.env up -d api worker-cpu
+#   docker compose -f infra/docker-compose.yml --profile gpu up -d worker-gpu     # on a GPU host
+# MinIO stands in for Cloudflare R2 locally (same S3 API).
+name: fmi
+
+x-app-env: &app-env
+  FMI_DATABASE_URL: postgresql+psycopg://fmi:${POSTGRES_PASSWORD:-fmi}@postgres:5432/fmi
+  FMI_REDIS_URL: redis://redis:6379/0
+  FMI_STORAGE_ROOT: /data/storage
+  FMI_OPENDATA_ROOT: /app/data/opendata
+  FMI_S3_BUCKET: ${FMI_S3_BUCKET:-}
+  FMI_S3_ENDPOINT: ${FMI_S3_ENDPOINT:-http://minio:9000}
+  FMI_S3_PREFIX: ${FMI_S3_PREFIX:-fmi}
+  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-minio}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-minio12345}
+  FMI_API_TOKEN: ${FMI_API_TOKEN:-}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  FMI_AGENT_MODEL: ${FMI_AGENT_MODEL:-claude-opus-5-5}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: fmi
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fmi}
+      POSTGRES_DB: fmi
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fmi"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID:-minio}
+      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY:-minio12345}
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [minio:/data]
+    profiles: [s3]
+
+  api:
+    build: {context: .., dockerfile: infra/Dockerfile.api}
+    environment: *app-env
+    command: uvicorn fmi_api.main:app --host 0.0.0.0 --port 8000
+    ports: ["8000:8000"]
+    volumes: [storage:/data/storage]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+
+  worker-cpu:
+    build: {context: .., dockerfile: infra/Dockerfile.api}
+    environment: *app-env
+    command: celery -A fmi_api.tasks worker -Q cpu -c 2 --loglevel=info
+    volumes: [storage:/data/storage]
+    depends_on: [api]
+
+  worker-gpu:
+    build: {context: .., dockerfile: infra/Dockerfile.worker-gpu}
+    environment: *app-env
+    command: celery -A fmi_api.tasks worker -Q gpu -c 1 --loglevel=info
+    volumes:
+      - storage:/data/storage
+      - ../models:/app/models
+    deploy:
+      resources:
+        reservations:
+          devices: [{driver: nvidia, count: 1, capabilities: [gpu]}]
+    profiles: [gpu]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  minio:
+  storage:

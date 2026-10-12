@@ -1,0 +1,13 @@
+# Example PipelineConfig override (FMI_PIPELINE_CONFIG=infra/pipeline.example.yaml or `fmi run --config`).
+detect:
+  imgsz: 1280
+  tiling: auto          # on for 4K panoramic (SoccerTrack v2)
+calib:
+  camera: auto          # static for panoramic/static tiers, moving for broadcast/follow-cam
+  keyframe_every: 5
+track:
+  new_track_thresh: 0.6
+team:
+  embedder: siglip      # or "color" on CPU-only machines
+models:
+  device: cuda

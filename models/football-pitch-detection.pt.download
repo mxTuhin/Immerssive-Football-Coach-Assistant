@@ -1,0 +1,8 @@
+# NEEDS DOWNLOAD - pretrained roboflow/sports YOLOv8-pose 32-point pitch keypoint model.
+name: pitch keypoints
+target: football-pitch-detection.pt
+method: gdown
+url: https://drive.google.com/uc?id=1Ma5Kt86tgpdjCTKfum79YMgNnSjcoOyf
+source: https://github.com/roboflow/sports
+group: models
+required: true

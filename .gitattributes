@@ -1,0 +1,4 @@
+*.gz binary
+*.pt binary
+*.mp4 binary
+*.parquet binary
